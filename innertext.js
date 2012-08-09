@@ -1,4 +1,4 @@
-if ( (!('innerText' in document.body)) && ('getSelection' in window) ) {
+if ( (!('innerText' in document.createElement('a'))) && ('getSelection' in window) ) {
     HTMLElement.prototype.__defineGetter__("innerText", function() {
         var selection = window.getSelection(),
             ranges    = [],
@@ -12,8 +12,9 @@ if ( (!('innerText' in document.body)) && ('getSelection' in window) ) {
         // Deselect everything.
         selection.removeAllRanges();
 
-        // Select `el` and all child nodes
-        selection.selectAllChildren(el);
+        // Select `el` and all child nodes.
+        // 'this' is the element .innerText got called on
+        selection.selectAllChildren(this);
 
         // Get the string representation of the selected nodes.
         str = selection.toString();
