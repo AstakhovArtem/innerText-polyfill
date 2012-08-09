@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8>
+<title>innerText Polyfill Test</title>
+<style>
+  #text, body > pre {
+    border: 1px solid black;
+    padding: 10px;
+  }
+  
+  #code {
+    display: block;
+  }
+</style>
+<script src="./innertext.js"></script>
+<script>
+function isUsingPolyfill() {
+  return (typeof(HTMLElement.prototype.__lookupGetter__("innerText")) == "function");
+}
+
+function run() {
+  document.getElementById('out').innerHTML = document.getElementById('text').innerText;
+}
+</script>
+</head>
+<body>
+  <p>This is my attempt at a cross-platform approximation of .innerText.</p>
+  <p>To my knowledge, it's only enabled in Gecko-based browsers..</p>
+  <p></p>
+  <p>Original HTML:</p>
+  <div id="text">
+    test
+    <code>
+      abc
+      def
+      <pre>
+        one
+        two
+        three
+      </pre>
+    </code>
+  </div>
+  
+  <p>Result (wrapped in a &lt;pre>):</p>
+  <pre id="out"></pre>
+  
+  <p>You are <span id="not"></span>using the polyfill.</p>
+
+  <button onclick="run();">Run</button>
+
+<script>
+document.getElementById('not').innerHTML = isUsingPolyfill() ? '' : 'not ';
+</script>
+</body>
+</html>
